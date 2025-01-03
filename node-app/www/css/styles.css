@@ -1,34 +1,110 @@
-.content > .table-view:first-child {
-    margin-top: -2px;
-}
 
-.hidden {
-    opacity: 0;
-}
-
-.media-object.big {
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
-}
-
-.media-object.small {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-}
-
-.table-view-cell h1 {
-    font-size: 20px;
-    font-weight: normal;
-    padding: 20px 0 4px 0;
+body {
     margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-input[type=search] {
-    border-radius: 8px;
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+input[type="search"] {
+    width: 50%;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    background-color: #333;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+input[type="search"]:focus {
+    width: 60%;
+    background-color: #444;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .card {
-    margin-top:54px;
+    background: linear-gradient(145deg, #2b2b2b, #3c3c3c);
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+
+.card h1 {
+    font-size: 22px;
+    color: #00bcd4;
+}
+
+.card p {
+    font-size: 14px;
+    color: #d1d1d1;
+}
+
+
+.bar-nav {
+    background-color: #222;
+    color: #00bcd4;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 20px;
+    border-bottom: 1px solid #444;
+}
+
+
+.pageslider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    color: #f0f0f0;
+    transition: transform 0.25s ease-in-out;
+}
+
+.page.center {
+    transform: translateX(0);
+}
+
+.page.left {
+    transform: translateX(-100%);
+}
+
+.page.right {
+    transform: translateX(100%);
+}
+
+
+.page.transition {
+    transition: transform 0.25s ease-in-out;
 }
