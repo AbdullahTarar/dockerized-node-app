@@ -1,13 +1,7 @@
 pipeline {
     agent any
     
-    environment {
-        DOCKER_IMAGE = "abdullahtarar222/demo-node-app"
-    }
 
-    triggers {
-        githubPush()
-    }
 
     stages {
         stage('Clone Repository') {
