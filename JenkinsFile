@@ -1,18 +1,56 @@
 pipeline {
-    agent master
-    
+    agent any
 
+    environment {
+        DOCKER_IMAGE = 'abdullahtarar222/demo-node-app'
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
+    }
 
     stages {
         stage('Clone Repository') {
             steps {
-                sh 'cd ~/jenkins-pipeline-test'
-                sh 'rm -r dockerized-node-app'
-                echo 'Cloning the GitHub repository...'
-                git branch: 'main', url: 'https://github.com/AbdullahTarar/dockerized-node-app.git'
+                script {
+                    sh '''
+                        cd /home/abdullah/jenkins-pipeline-test/
+                        if [ -d "dockerized-node-app" ]; then 
+                            rm -r dockerized-node-app
+                        fi
+                        git clone https://github.com/AbdullahTarar/dockerized-node-app.git
+                    '''
+                }
             }
         }
 
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image without cache...'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
+                                                  usernameVariable: 'DOCKER_USER', 
+                                                  passwordVariable: 'DOCKER_PASS')]) {
+                    script {
+                        sh '''
+                            cd /home/abdullah/jenkins-pipeline-test/dockerized-node-app
+                            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+                            docker build --no-cache -t ${DOCKER_IMAGE}:latest .
+                            docker push ${DOCKER_IMAGE}:latest
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Rolling Restart Deployment') {
+            steps {
+                script {
+                    echo 'Restarting deployment in kind cluster...'
+                    sh '''
+
+                        kubectl rollout restart deployment/node-app
+                        kubectl rollout status deployment/node-app
+                    '''
+                }
+            }
+        }
     }
 
     post {
