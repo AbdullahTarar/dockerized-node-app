@@ -5,7 +5,9 @@ pipeline {
         DOCKER_IMAGE = 'abdullahtarar222/demo-node-app'
         KUBECONFIG = '/var/lib/jenkins/.kube/config'
     }
-
+    triggers {
+        githubPush()
+    }
     stages {
         stage('Clone Repository') {
             steps {
