@@ -1,6 +1,9 @@
 Dockerized Node.js Employee Directory with Kind Cluster Deployment
 ==================================================================
 
+## Architecture
+![Project Architecture](./node-app.png)
+
 Overview
 --------
 
